@@ -10,6 +10,7 @@ namespace SpaghettiPuzzle
         private bool _isMousePressed;
         [SerializeField] private HashSet<Vector2> _pointsSet;
         private Vector2 _mousePosition;
+        [SerializeField] private Transform _mover;
 
 
         private Camera _mainCam;
@@ -33,42 +34,24 @@ namespace SpaghettiPuzzle
 
         private void Update()
         {
-            if (Input.GetMouseButtonDown(0))
+            if (_pointsSet.Contains(_mover.position) == false)
             {
-                _isMousePressed = true;
-                _lr.positionCount = 0;
-                _pointsSet.Clear();
+                _pointsSet.Add(_mover.position);
+                _lr.positionCount = _pointsSet.Count;
+                _lr.SetPosition(_pointsSet.Count - 1, _mover.position);
 
-                _lr.startColor = _startColor;
-                _lr.endColor = _startColor;
-            }
-
-            if (Input.GetMouseButtonUp(0))
-            {
-                _isMousePressed = false;
-            }
-
-            // Drawing line
-            if (_isMousePressed)
-            {
-                _mousePosition = _mainCam.ScreenToWorldPoint(Input.mousePosition);
-                if (_pointsSet.Contains(_mousePosition) == false)
+                if (IsLineSegmentCollided())
                 {
-                    _pointsSet.Add(_mousePosition);
-                    _lr.positionCount = _pointsSet.Count;
-                    _lr.SetPosition(_pointsSet.Count - 1, _mousePosition);
+                    _isMousePressed = false;
+                    _lr.startColor = Color.red;
+                    _lr.endColor = Color.red;
 
-                    if (IsLineSegmentCollided())
-                    {
-                        _isMousePressed = false;
-                        _lr.startColor = Color.red;
-                        _lr.endColor = Color.red;
-                    }
+                    Time.timeScale = 0.0f;
                 }
             }
         }
 
-       
+
 
         private bool IsLineSegmentCollided()
         {
@@ -80,13 +63,13 @@ namespace SpaghettiPuzzle
 
             for (int i = 0; i < pointsArray.Length - 3; i++) // Corrected index range
             {
-                if (isLinesIntersect(pointsArray[i], pointsArray[i + 1], pointsArray[pointsArray.Length - 2], pointsArray[pointsArray.Length - 1]))
+                if (IsLinesIntersect(pointsArray[i], pointsArray[i + 1], pointsArray[pointsArray.Length - 2], pointsArray[pointsArray.Length - 1]))
                     return true;
             }
             return false;
         }
 
-        private bool isLinesIntersect(Vector2 p1, Vector2 p2, Vector2 p3, Vector2 p4)
+        private bool IsLinesIntersect(Vector2 p1, Vector2 p2, Vector2 p3, Vector2 p4)
         {
             // Use Unity's Vector2.Dot and Vector2.Cross for line intersection checks
             float denominator = (p4.y - p3.y) * (p2.x - p1.x) - (p4.x - p3.x) * (p2.y - p1.y);
@@ -98,5 +81,6 @@ namespace SpaghettiPuzzle
 
             return (ua >= 0 && ua <= 1 && ub >= 0 && ub <= 1);
         }
+
     }
 }
