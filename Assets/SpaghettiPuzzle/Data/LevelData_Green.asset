@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f90e56c5a342e54d9535ac94e0e06a5, type: 3}
+  m_Name: LevelData_Green
+  m_EditorClassIdentifier: 
+  Level: 0
+  Background: {fileID: 21300000, guid: 0b42ebfb4d0b0da4fb563f070937cb6a, type: 3}
+  Prefab: {fileID: 6505432001737780265, guid: 40d166d715494e64bbaf66d60d8becbe, type: 3}
+  MaskPrefab: {fileID: 5512253990223532743, guid: 29c079efe410a864b8f03bf5aeb2e9e8, type: 3}
